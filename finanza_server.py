@@ -16,7 +16,7 @@ load_dotenv()
 app = Flask(__name__)
 
 API_TOKEN = os.getenv("FINANZA_API_TOKEN", "")
-APK_PATH = os.path.join(os.path.expanduser("~"), "Desktop", "AnalisiFinanziaria.apk")
+APK_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "AnalisiFinanziaria.apk")
 
 
 def _autorizzato():
