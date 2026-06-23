@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+cache_finanza.json
+storico_finanza.jsonl
+segnali_aperti.json

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: finanza-android-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn finanza_server:app --bind 0.0.0.0:$PORT --timeout 120
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: FINANZA_API_TOKEN
+        sync: false
