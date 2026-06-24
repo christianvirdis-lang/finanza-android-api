@@ -156,6 +156,8 @@ Ti vengono forniti (se presenti) i segnali ancora aperti emessi nei giorni scors
 PARTE 2 — NUOVI SEGNALI DI OGGI
 Seleziona ESATTAMENTE 3 nuovi segnali in totale — non uno a forza per categoria, ma i 3 migliori in assoluto tra azioni, forex, crypto e materie prime/indici, a qualunque orizzonte temporale (breve 1-5 giorni, medio 2-8 settimane, lungo 3-12 mesi) — applicando rigorosamente i 6 filtri sopra. Per ciascuno indica quali filtri sono stati decisivi.
 
+Per ogni segnale indica anche quanto capitale investire, come percentuale del capitale totale disponibile (campo "capitale_percentuale", es. "5%"), in linea con la gestione del rischio di Druckenmiller/Soros: tra il 2% e il 15%, più alta quando convinzione e rapporto reward/rischio sono migliori e il rischio è Basso/Medio, più bassa quando il rischio è Alto o la convinzione è minore. Tieni conto che ci sono anche altri segnali aperti contemporaneamente: la somma delle percentuali su tutte le posizioni aperte non deve mai superare il 100% del capitale.
+
 Rispondi ESCLUSIVAMENTE con un blocco JSON valido, senza alcun testo prima o dopo, in questo formato esatto:
 """
     schema = """{
@@ -164,7 +166,7 @@ Rispondi ESCLUSIVAMENTE con un blocco JSON valido, senza alcun testo prima o dop
     {"id_segnale": "id del segnale aperto a cui si riferisce", "cosa_e_cambiato": "", "azione_consigliata": "", "gravita": "Bassa, Media o Alta"}
   ],
   "segnali": [
-    {"strumento":"","ticker":"","categoria":"azioni, forex, crypto o commodities","direzione":"Long o Short","orizzonte":"breve, medio o lungo","prezzo_attuale":"","entry":"","stop_loss":"","take_profit":"","rischio":"Basso, Medio o Alto","criteri":"quali dei 6 filtri sono stati decisivi, in breve","motivazione":""}
+    {"strumento":"","ticker":"","categoria":"azioni, forex, crypto o commodities","direzione":"Long o Short","orizzonte":"breve, medio o lungo","prezzo_attuale":"","entry":"","stop_loss":"","take_profit":"","rischio":"Basso, Medio o Alto","capitale_percentuale":"es. 5%","criteri":"quali dei 6 filtri sono stati decisivi, in breve","motivazione":""}
   ]
 }"""
     tail = (
@@ -182,7 +184,8 @@ def build_user_message(date_str, segnali_aperti):
     righe = [
         f"- id={s.get('id')} | {s.get('strumento')} ({s.get('ticker', '')}) | {s.get('direzione')} | "
         f"emesso il {s.get('data_emissione')} | orizzonte {s.get('orizzonte')} | entry {s.get('entry')} | "
-        f"stop loss {s.get('stop_loss')} | take profit {s.get('take_profit')}"
+        f"stop loss {s.get('stop_loss')} | take profit {s.get('take_profit')} | "
+        f"capitale impegnato: {s.get('capitale_percentuale', 'n/d')}"
         for s in segnali_aperti
     ]
     elenco = "\n".join(righe)
